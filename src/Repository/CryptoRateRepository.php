@@ -16,20 +16,21 @@ class CryptoRateRepository extends ServiceEntityRepository
         parent::__construct($registry, CryptoRate::class);
     }
 
-    //    /**
-    //     * @return CryptoRate[] Returns an array of CryptoRate objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return CryptoRate
+     */
+    public function findCurrencyPairRateByDate($currencyPair, $date)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.timestamp >= :timestamp_date')
+            ->andWhere('c.currencyPair = :currencyPair')
+            ->setParameter('timestamp_date', $date)
+            ->setParameter('currencyPair', $currencyPair)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
     //    public function findOneBySomeField($value): ?CryptoRate
     //    {
